@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout - CraftYourBottle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+        }
+
+        .step-active {
+            background-color: #1e3a8a;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="text-slate-800">
+
+    <nav class="bg-white border-b border-gray-200 py-6">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <button onclick="toggleSidebar()"
+                    class="p-2 -ml-2 mr-2 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
+                    <i class="fa-solid fa-bars-staggered text-xl"></i>
+                </button>
+                <a href="bottlecraft.html" class="flex items-center gap-2">
+                    <i class="fa-solid fa-wine-bottle text-slate-700 text-xl"></i>
+                    <span class="font-bold text-xl tracking-tight text-slate-800">CraftYourBottle</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-2 text-slate-400 text-sm font-medium">
+                <i class="fa-solid fa-lock text-xs"></i> Secure SSL Checkout
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+            <div class="lg:col-span-8 space-y-8">
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span
+                            class="w-8 h-8 rounded-full step-active flex items-center justify-center text-xs font-bold">1</span>
+                        <h2 class="text-xl font-bold text-slate-900">Shipping Address</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Full Name</label>
+                            <input type="text" placeholder="John Doe"
+                                class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:border-blue-500 outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Street Address</label>
+                            <input type="text" placeholder="123 Bottle St."
+                                class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:border-blue-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">City</label>
+                            <input type="text" placeholder="New York"
+                                class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:border-blue-500 outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">State</label>
+                                <input type="text" placeholder="NY"
+                                    class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:border-blue-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">ZIP</label>
+                                <input type="text" placeholder="10001"
+                                    class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:border-blue-500 outline-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span
+                            class="w-8 h-8 rounded-full step-active flex items-center justify-center text-xs font-bold">2</span>
+                        <h2 class="text-xl font-bold text-slate-900">Payment Method</h2>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div
+                            class="border-2 border-blue-500 bg-blue-50/30 rounded-xl p-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" checked class="w-4 h-4 text-blue-600">
+                                <span class="text-sm font-bold text-slate-900">Credit / Debit Card</span>
+                            </div>
+                            <div class="flex gap-2 text-xl text-slate-400">
+                                <i class="fa-brands fa-cc-visa"></i>
+                                <i class="fa-brands fa-cc-mastercard"></i>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Card Number</label>
+                                <div class="relative">
+                                    <input type="text" placeholder="0000 0000 0000 0000"
+                                        class="w-full border border-slate-200 rounded-lg pl-4 pr-10 py-3 text-sm focus:border-blue-500 outline-none">
+                                    <i
+                                        class="fa-solid fa-credit-card absolute right-4 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Expiry Date</label>
+                                <input type="text" placeholder="MM / YY"
+                                    class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:border-blue-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">CVC</label>
+                                <input type="text" placeholder="123"
+                                    class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:border-blue-500 outline-none">
+                            </div>
+                        </div>
+
+                        <div
+                            class="border border-slate-200 rounded-xl p-4 flex items-center gap-3 hover:bg-slate-50 cursor-pointer">
+                            <input type="radio" class="w-4 h-4 text-blue-600">
+                            <span class="text-sm font-bold text-slate-900">PayPal</span>
+                            <i class="fa-brands fa-paypal text-blue-600 ml-auto"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="success.html"
+                    class="w-full bg-[#1e3a8a] text-white py-5 rounded-2xl font-bold text-lg hover:bg-blue-900 transition shadow-xl shadow-blue-900/20 flex items-center justify-center">
+                    Complete Purchase â€” $151.16
+                </a>
+            </div>
+
+            <div class="lg:col-span-4">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 sticky top-6">
+                    <h2 class="text-lg font-bold text-slate-900 mb-6">Your Order</h2>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="flex gap-4">
+                            <div class="w-16 h-16 bg-slate-50 rounded-lg border border-slate-100 flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1602143407151-11115cd225ca?w=100"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-xs font-bold text-slate-900">Sport Hydration Bottle</h4>
+                                <p class="text-[10px] text-slate-400">Qty: 1 â€¢ Clear/Cyan</p>
+                                <p class="text-xs font-bold text-slate-900 mt-1">$19.99</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-16 h-16 bg-slate-50 rounded-lg border border-slate-100 flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=100"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-xs font-bold text-slate-900">Luxury Designer Bottle</h4>
+                                <p class="text-[10px] text-slate-400">Qty: 1 â€¢ Gold Accent</p>
+                                <p class="text-xs font-bold text-slate-900 mt-1">$89.99</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 py-6 border-y border-slate-50">
+                        <div class="flex justify-between text-sm text-slate-500">
+                            <span>Subtotal</span>
+                            <span class="text-slate-900 font-medium">$139.96</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-slate-500">
+                            <span>Shipping</span>
+                            <span class="text-green-600 font-bold">Free</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-slate-500">
+                            <span>Taxes</span>
+                            <span class="text-slate-900 font-medium">$11.20</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center pt-6">
+                        <span class="text-base font-bold text-slate-900">Total</span>
+                        <span class="text-2xl font-bold text-[#1e3a8a]">$151.16</span>
+                    </div>
+
+                    <div class="mt-8 bg-slate-50 rounded-xl p-4">
+                        <div class="flex items-center gap-3 text-xs text-slate-500">
+                            <i class="fa-solid fa-shield-check text-green-500 text-lg"></i>
+                            <p>Your data is protected by industry-leading encryption and security protocols.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>

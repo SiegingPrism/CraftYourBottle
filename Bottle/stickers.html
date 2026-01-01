@@ -1,0 +1,728 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Performance Optimization: Resource Hints -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com/ajax/libs">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/ajax/libs">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <title>Sticker Lab - CraftYourBottle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <style>
+        .sticker-item {
+            touch-action: none;
+            user-select: none;
+        }
+
+        /* Hide scrollbar for cleaner UI */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body class="bg-yellow-50 text-slate-900 overflow-hidden">
+
+    <nav class="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-40">
+        <div class="flex items-center gap-2">
+            <button onclick="toggleSidebar()"
+                class="p-2 -ml-2 mr-2 bg-white/80 backdrop-blur text-slate-800 hover:bg-white rounded-lg transition-colors shadow-sm">
+                <i class="fa-solid fa-bars-staggered text-xl"></i>
+            </button>
+            <a href="bottlecraft.html"
+                class="flex items-center gap-2 text-slate-900 bg-white/80 backdrop-blur px-3 py-1 rounded-full shadow-sm">
+                <i class="fa-solid fa-wine-bottle text-xl"></i>
+                <span class="font-bold text-xl tracking-tight">CraftYourBottle Lab</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="flex flex-col lg:flex-row h-screen pt-0 font-sans">
+        <!-- Label Designer Panel -->
+        <div
+            class="hidden lg:flex w-80 bg-white border-r border-slate-200 h-full flex-col z-30 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+            <!-- Header -->
+            <div class="p-6 border-b border-slate-100 shrink-0">
+                <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-pen-ruler text-blue-600"></i> Label Designer
+                </h3>
+                <p class="text-xs text-slate-500 mt-1">Customize your vendor label template.</p>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-5">
+                <!-- Branding -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Branding</label>
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 mb-1 block">Brand Logo</span>
+                            <div class="flex items-center gap-2">
+                                <label
+                                    class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors w-full">
+                                    <i class="fa-solid fa-image text-slate-400"></i>
+                                    <span class="text-xs text-slate-600 font-medium truncate" id="logoFileName">Upload
+                                        Logo</span>
+                                    <input type="file" id="lblLogo" accept="image/*" onchange="handleLogoUpload(this)"
+                                        class="hidden" />
+                                </label>
+                                <button onclick="clearLogo()" class="text-slate-400 hover:text-red-500 px-2"
+                                    title="Remove Logo">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 mb-1 block">Brand Name</span>
+                            <input type="text" id="lblBrand" placeholder="MY BRAND" value="MY BRAND"
+                                oninput="updateLabelPreview()"
+                                class="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-50 transition-all uppercase font-bold">
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 mb-1 block">Tagline / Est.</span>
+                            <input type="text" id="lblTagline" placeholder="EST. 2024" value="EST. 2024"
+                                oninput="updateLabelPreview()"
+                                class="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-blue-600 transition-colors uppercase">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Product
+                        Details</label>
+                    <div class="space-y-3">
+                        <div class="flex gap-2">
+                            <div class="flex-1">
+                                <span class="text-[10px] font-bold text-slate-400 mb-1 block">Detail 1</span>
+                                <input type="text" id="lblDetail1" value="100% Organic" oninput="updateLabelPreview()"
+                                    class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-blue-600 transition-colors">
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-[10px] font-bold text-slate-400 mb-1 block">Detail 2</span>
+                                <input type="text" id="lblDetail2" value="Eco Friendly" oninput="updateLabelPreview()"
+                                    class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-blue-600 transition-colors">
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="flex-1">
+                                <span class="text-[10px] font-bold text-slate-400 mb-1 block">Detail 3</span>
+                                <input type="text" id="lblDetail3" placeholder="e.g. Vegan"
+                                    oninput="updateLabelPreview()"
+                                    class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-blue-600 transition-colors">
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-[10px] font-bold text-slate-400 mb-1 block">Detail 4</span>
+                                <input type="text" id="lblDetail4" placeholder="e.g. Raw" oninput="updateLabelPreview()"
+                                    class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-blue-600 transition-colors">
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-400 mb-1 block">Capacity</span>
+                                <select id="lblCapacity"
+                                    class="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-blue-600 bg-white font-bold uppercase cursor-pointer">
+                                    <option value="500 ML">500 ML</option>
+                                    <option value="750 ML">750 ML</option>
+                                    <option value="1 LITRE" selected>1 LITRE</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Options</label>
+                    <!-- NEW: QR Image Upload & Add -->
+                    <div class="bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-[10px] font-bold uppercase text-slate-500">Movable QR Code</label>
+                            <span class="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-bold">Free
+                                Move</span>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <label for="qrUpload"
+                                    class="cursor-pointer bg-white border border-slate-200 hover:border-blue-400 text-slate-600 px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 flex-1 justify-center shadow-sm">
+                                    <i class="fa-solid fa-qrcode"></i> <span id="qrFileName">Upload Image</span>
+                                </label>
+                                <input type="file" id="qrUpload" class="hidden" accept="image/png, image/jpeg"
+                                    onchange="handleQrUpload(this)">
+                                <button onclick="clearQr()"
+                                    class="text-slate-400 hover:text-red-500 transition-colors p-2 bg-white border border-slate-200 rounded-lg hover:border-red-200 shadow-sm"
+                                    title="Clear QR Image">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                            <button onclick="addQrSticker()"
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-xs shadow-sm active:scale-95 transition-all">
+                                <i class="fa-solid fa-plus mr-1"></i> Add QR Sticker to Bottle
+                            </button>
+                        </div>
+                    </div>
+
+                    <label
+                        class="flex items-center gap-2 cursor-pointer bg-slate-50 p-2 rounded-lg border border-slate-100 hover:bg-slate-100 transition-colors">
+                        <input type="checkbox" id="transparentBg" onchange="updateLabelPreview()"
+                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300">
+                        <span class="text-xs font-medium text-slate-600">Transparent Background</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Fixed Footer Action -->
+            <div class="p-4 border-t border-slate-100 bg-white z-10 shrink-0">
+                <button onclick="addLabelToBottle()"
+                    class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-plus-circle"></i> Add Label to Bottle
+                </button>
+                <p class="text-[10px] text-center text-slate-400 mt-2">Click to add. You can drag and resize it on the
+                    bottle.</p>
+            </div>
+        </div>
+        <!-- Canvas Area -->
+        <div class="flex-1 bg-slate-100 relative flex items-center justify-center overflow-hidden h-full">
+            <div
+                class="absolute inset-0 opacity-5 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:16px_16px]">
+            </div>
+
+            <div class="relative h-[85vh] w-full max-w-[500px] transition-transform duration-500" id="bottleContainer">
+                <img src="plastic_bottle.png"
+                    class="w-full h-full object-cover rounded-2xl shadow-2xl pointer-events-none select-none relative z-10"
+                    id="bottleImage">
+
+                <!-- Drop Zone area overlay -->
+                <div id="dropzone" class="absolute inset-0 z-20 overflow-hidden rounded-2xl">
+                    <!-- Stickers appended here -->
+                </div>
+            </div>
+
+            <div
+                class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-30 w-full px-6 pointer-events-none">
+
+                <!-- Bottle Selector Removed -->
+
+                <!-- Action Bar -->
+                <div
+                    class="bg-white/90 backdrop-blur px-6 py-3 rounded-full shadow-xl text-xs font-bold text-slate-500 flex items-center gap-4 pointer-events-auto">
+                    <span class="uppercase tracking-widest hidden sm:inline">Actions</span>
+                    <div class="h-4 w-px bg-slate-300 hidden sm:block"></div>
+
+                    <button onclick="document.getElementById('uploadStickerInput').click()"
+                        class="hover:text-purple-600 transition-colors flex items-center gap-1 text-purple-600">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Upload
+                    </button>
+                    <input type="file" id="uploadStickerInput" class="hidden" accept="image/png, image/jpeg"
+                        onchange="handleStickerUpload(this)">
+
+                    <button onclick="clearStickers()"
+                        class="hover:text-red-500 transition-colors flex items-center gap-1"><i
+                            class="fa-solid fa-trash-can"></i> Clear</button>
+                    <button onclick="shuffleStickers()"
+                        class="hover:text-blue-500 transition-colors flex items-center gap-1"><i
+                            class="fa-solid fa-shuffle"></i> Shuffle</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette Panel -->
+        <div class="lg:w-1/3 bg-white border-l border-slate-200 h-full flex flex-col pt-20 shadow-xl z-20">
+            <div class="p-8 pb-4">
+                <h1 class="text-3xl font-extrabold mb-2 text-slate-800">Sticker Lab</h1>
+                <p class="text-slate-500 text-sm">Drag and drop, or <span class="text-purple-600 font-bold">Upload
+                        Your
+                        Own</span>. Perfect for Artists & Sellers!</p>
+            </div>
+
+            <div class="flex-1 overflow-y-auto px-8 pb-8 space-y-8">
+
+                <!-- Custom Brand Label Action -->
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xs font-bold uppercase text-slate-400 tracking-wider">Your Design</h3>
+                    </div>
+
+                    <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-3 shadow-sm text-indigo-600 text-2xl">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 mb-1">Custom Brand Label</h3>
+                        <p class="text-xs text-slate-500 mb-4">Add the label you designed on the left to your bottle.
+                        </p>
+                        <button onclick="addLabelToBottle()"
+                            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-xl transition-all shadow-md active:scale-95 text-sm">
+                            Add to Bottle <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Sticker Packs Removed as requested -->
+
+            </div>
+
+            <div class="p-6 border-t border-slate-100 bg-white">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-bold text-slate-500" id="stickerCount">0 Stickers Added</span>
+                    <span class="text-2xl font-bold text-slate-900" id="totalPrice">₹0.00</span>
+                </div>
+                <button onclick="addCustomBottleToCart()"
+                    class="w-full bg-[#1e3a8a] text-white py-4 rounded-xl font-bold hover:bg-blue-900 transition-all shadow-lg shadow-blue-900/20 active:scale-[0.98]">
+                    Add Custom Bottle to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="nav.js"></script>
+    <script src="cart_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script>
+        function addCustomBottleToCart() {
+            const basePrice = 799.00;
+            const stickersPrice = count * pricePerSticker;
+            const totalPrice = basePrice + stickersPrice;
+
+            const product = {
+                id: 'custom-bottle-' + Date.now(),
+                name: 'Custom Sticker Bottle',
+                price: totalPrice,
+                image: 'plastic_bottle.png', // Ideally we'd capture the canvas, but reusing base image for now
+                quantity: 1,
+                options: {
+                    stickers: count,
+                    custom: true
+                }
+            };
+
+            addToCart(product);
+            window.location.href = 'cart.html';
+        }
+
+        const dropzone = document.getElementById('dropzone');
+        let count = 0;
+        const pricePerSticker = 100.00;
+
+        // --- Interact.js Setup for Drag & Resize ---
+        interact('.draggable-item')
+            .draggable({
+                inertia: true,
+                modifiers: [
+                    interact.modifiers.restrictRect({
+                        restriction: 'parent',
+                        endOnly: true
+                    })
+                ],
+                autoScroll: true,
+                listeners: {
+                    move: dragMoveListener,
+                    start: function (event) {
+                        setActiveLabel(event.target);
+                    }
+                }
+            })
+            .resizable({
+                // resize from all edges and corners
+                edges: { left: false, right: true, bottom: true, top: false },
+
+                listeners: {
+                    move(event) {
+                        var target = event.target
+                        var x = (parseFloat(target.getAttribute('data-x')) || 0)
+                        var y = (parseFloat(target.getAttribute('data-y')) || 0)
+
+                        // update the element's style
+                        target.style.width = event.rect.width + 'px'
+                        target.style.height = event.rect.height + 'px'
+
+                        // translate when resizing from top or left edges
+                        x += event.deltaRect.left
+                        y += event.deltaRect.top
+
+                        target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+
+                        target.setAttribute('data-x', x)
+                        target.setAttribute('data-y', y)
+                        // Re-render content to fit new size (simple approach: just keep it full width/height)
+                        // We need to preserve the handle and content. 
+                        // actually, the innerHTML is wiped if we do textContent above! remove that line.
+                    },
+                    start: function (event) {
+                        setActiveLabel(event.target);
+                    }
+                },
+                modifiers: [
+                    // keep the edges inside the parent
+                    interact.modifiers.restrictEdges({
+                        outer: 'parent'
+                    }),
+
+                    // Minimum size
+                    interact.modifiers.restrictSize({
+                        min: { width: 100, height: 100 }
+                    })
+                ],
+
+                inertia: true
+            });
+
+        function dragMoveListener(event) {
+            var target = event.target
+            // keep the dragged position in the data-x/data-y attributes
+            var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+            var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+            // translate the element
+            target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+
+            // update the posiion attributes
+            target.setAttribute('data-x', x)
+            target.setAttribute('data-y', y)
+        }
+
+        // Label State
+        let currentLabelLogo = null;
+        let activeLabelElement = null;
+
+        function setActiveLabel(el) {
+            // Only set if it's a label created by our generator (has label-content class inside?)
+            // Or just treat any draggable as active for z-index purposes
+            if (activeLabelElement) activeLabelElement.style.zIndex = 50;
+            activeLabelElement = el;
+            activeLabelElement.style.zIndex = 100;
+        }
+
+        function handleLogoUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                document.getElementById('logoFileName').innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    currentLabelLogo = e.target.result;
+                    updateLabelPreview(); // Live update
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function clearLogo() {
+            currentLabelLogo = null;
+            document.getElementById('lblLogo').value = '';
+            document.getElementById('logoFileName').innerText = 'Upload Logo';
+            updateLabelPreview(); // Live update
+        }
+
+        let currentQrImage = null;
+
+        function handleQrUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                document.getElementById('qrFileName').innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    currentQrImage = e.target.result;
+                    // Note: We no longer auto-check 'showQr' because it's a separate button now.
+                    // But we could auto-add it if we wanted. For now let user click "Add".
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function clearQr() {
+            currentQrImage = null;
+            document.getElementById('qrUpload').value = '';
+            document.getElementById('qrFileName').innerText = 'Upload QR Image';
+        }
+
+        function addQrSticker() {
+            const wrapper = document.createElement('div');
+            wrapper.style.width = '60px';
+            wrapper.style.height = '60px';
+            const rect = dropzone.getBoundingClientRect();
+            // Offset slightly so it doesn't spawn exactly on top of label if centered
+            const initialX = rect.width / 2 + 50;
+            const initialY = rect.height / 2 + 50;
+
+            wrapper.style.transform = `translate(${initialX}px, ${initialY}px)`;
+            wrapper.setAttribute('data-x', initialX);
+            wrapper.setAttribute('data-y', initialY);
+
+            wrapper.className = "draggable-item box-border absolute z-50 touch-none select-none flex items-center justify-center group";
+
+            let content = '';
+            if (currentQrImage) {
+                content = `<img src="${currentQrImage}" class="w-full h-full object-contain pointer-events-none" />`;
+            } else {
+                content = `<i class="fa-solid fa-qrcode text-5xl text-slate-900 pointer-events-none"></i>`;
+            }
+            wrapper.innerHTML = content;
+
+            // Add resize handle
+            const handle = document.createElement('div');
+            handle.className = "absolute bottom-[-5px] right-[-5px] w-5 h-5 cursor-nwse-resize z-50 flex items-center justify-center bg-white border border-slate-300 rounded-full shadow-sm opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity";
+            handle.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right text-slate-500 text-[8px] rotate-45"></i>';
+            wrapper.appendChild(handle);
+
+            wrapper.addEventListener('contextmenu', (e) => { e.preventDefault(); removeSticker(wrapper); });
+            wrapper.addEventListener('mousedown', () => setActiveLabel(wrapper));
+
+            dropzone.appendChild(wrapper);
+            setActiveLabel(wrapper);
+            updateStats(1);
+        }
+
+        function createLabelHTML() {
+            const brand = document.getElementById('lblBrand').value || 'BRAND';
+            const tagline = document.getElementById('lblTagline').value || 'EST';
+            const d1 = document.getElementById('lblDetail1').value;
+            const d2 = document.getElementById('lblDetail2').value;
+            const d3 = document.getElementById('lblDetail3').value;
+            const d4 = document.getElementById('lblDetail4').value;
+            const capacity = document.getElementById('lblCapacity').value;
+            // showQr is removed/deprecated for internal label
+            const isTransparent = document.getElementById('transparentBg').checked;
+
+            const bgClass = isTransparent ? 'bg-transparent' : 'bg-white';
+            const borderClass = 'border-slate-900';
+            const textClass = 'text-slate-900';
+
+            const dotColor = 'bg-slate-900';
+            const hrColor = 'border-slate-900';
+
+            let logoHtml = '';
+            if (currentLabelLogo) {
+                logoHtml = `<img src="${currentLabelLogo}" class="w-8 h-8 mx-auto rounded-full object-cover mb-1 bg-white border border-slate-100" />`;
+            } else {
+                logoHtml = `<div class="w-5 h-5 mx-auto bg-slate-900 text-white rounded-full mb-0.5 flex items-center justify-center text-[5px] font-bold">LOGO</div>`;
+            }
+
+            return `
+                 <div class="label-content w-full h-full flex flex-col gap-1 p-3 ${bgClass} border-[3px] ${borderClass} ${textClass} shadow-none font-sans text-left transition-colors overflow-hidden select-none relative box-border">
+                    <div class="text-center border-b-2 ${hrColor} pb-1 shrink-0">
+                        ${logoHtml}
+                        <h2 class="text-xl font-black uppercase leading-none tracking-tight break-words line-clamp-2">${brand}</h2>
+                    </div>
+                    <div class="text-center py-0.5 shrink-0">
+                        <p class="text-[8px] uppercase font-bold tracking-widest opacity-70 break-words">${tagline}</p>
+                    </div>
+                    <div class="space-y-0.5 flex-1 min-h-0 overflow-hidden flex flex-col justify-center">
+                        ${d1 ? `
+                        <div class="flex items-start gap-1.5 min-w-0">
+                            <div class="w-1.5 h-1.5 ${dotColor} rounded-full shrink-0 mt-[3px]"></div>
+                            <span class="text-[10px] font-bold opacity-90 break-words leading-tight">${d1}</span>
+                        </div>` : ''}
+                        ${d2 ? `
+                        <div class="flex items-start gap-1.5 min-w-0">
+                            <div class="w-1.5 h-1.5 ${dotColor} rounded-full shrink-0 mt-[3px]"></div>
+                            <span class="text-[10px] font-bold opacity-90 break-words leading-tight">${d2}</span>
+                        </div>` : ''}
+                        ${d3 ? `
+                        <div class="flex items-start gap-1.5 min-w-0">
+                            <div class="w-1.5 h-1.5 ${dotColor} rounded-full shrink-0 mt-[3px]"></div>
+                            <span class="text-[10px] font-bold opacity-90 break-words leading-tight">${d3}</span>
+                        </div>` : ''}
+                        ${d4 ? `
+                        <div class="flex items-start gap-1.5 min-w-0">
+                            <div class="w-1.5 h-1.5 ${dotColor} rounded-full shrink-0 mt-[3px]"></div>
+                            <span class="text-[10px] font-bold opacity-90 break-words leading-tight">${d4}</span>
+                        </div>` : ''}
+                    </div>
+                    <div class="mt-1 pt-1 border-t-2 ${hrColor} flex justify-between items-end shrink-0 gap-2">
+                        <div class="min-w-0 flex-1">
+                             <span class="block text-[6px] font-bold opacity-60">NET QTY</span>
+                             <span class="text-sm font-black truncate">${capacity}</span>
+                        </div>
+                    </div>
+                 </div>
+            `;
+        }
+
+        function addLabelToBottle() {
+            const html = createLabelHTML();
+            const wrapper = document.createElement('div');
+            wrapper.style.width = '180px';
+            wrapper.style.height = '220px';
+            const rect = dropzone.getBoundingClientRect();
+            const initialX = rect.width / 2 - 90;
+            const initialY = rect.height / 2 - 110;
+
+            wrapper.style.transform = `translate(${initialX}px, ${initialY}px)`;
+            wrapper.setAttribute('data-x', initialX);
+            wrapper.setAttribute('data-y', initialY);
+
+            // Important: Use a class we can identify for updates
+            wrapper.className = "draggable-item custom-label absolute z-50 touch-none select-none box-border";
+            wrapper.innerHTML = html;
+
+            const handle = document.createElement('div');
+            handle.className = "absolute bottom-[-10px] right-[-10px] w-8 h-8 cursor-nwse-resize z-50 flex items-center justify-center bg-white border border-slate-300 rounded-full shadow-sm opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity";
+            handle.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right text-slate-500 text-[10px] rotate-45"></i>';
+            wrapper.classList.add('group');
+            wrapper.appendChild(handle);
+
+            wrapper.addEventListener('contextmenu', (e) => { e.preventDefault(); removeSticker(wrapper); });
+
+            // Set as active immediately
+            setActiveLabel(wrapper);
+
+            dropzone.appendChild(wrapper);
+            updateStats(1);
+        }
+
+        // Debounce utility
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+
+        // Original update logic
+        function _updateLabelPreview() {
+            // LIVE UPDATE LOGIC
+            // If there is an active label (and it's a custom label), update its content
+            if (activeLabelElement && activeLabelElement.classList.contains('custom-label')) {
+                const newHtml = createLabelHTML();
+                // We need to keep the handle
+                const handle = activeLabelElement.querySelector('.cursor-nwse-resize');
+                activeLabelElement.innerHTML = newHtml;
+                if (handle) activeLabelElement.appendChild(handle);
+            }
+        }
+
+        // Debounced version
+        const updateLabelPreview = debounce(_updateLabelPreview, 300);
+
+
+        // --- Legacy Drag Logic ---
+        function dragStart(ev) {
+            ev.dataTransfer.setData("text/html", ev.target.innerHTML);
+            ev.dataTransfer.dropEffect = "copy";
+        }
+
+        dropzone.addEventListener('dragover', (ev) => {
+            ev.preventDefault();
+        });
+
+        dropzone.addEventListener('drop', (ev) => {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text/html");
+
+            if (data.includes('label-design')) {
+                addLabelToBottle();
+                return;
+            }
+
+            const newSticker = document.createElement('div');
+            newSticker.innerHTML = data;
+            newSticker.className = "draggable-item absolute p-2 text-5xl z-50 touch-none select-none";
+
+            const rect = dropzone.getBoundingClientRect();
+            const x = ev.clientX - rect.left - 25;
+            const y = ev.clientY - rect.top - 25;
+
+            newSticker.style.transform = `translate(${x}px, ${y}px)`;
+            newSticker.setAttribute('data-x', x);
+            newSticker.setAttribute('data-y', y);
+
+            newSticker.addEventListener('contextmenu', (e) => { e.preventDefault(); removeSticker(newSticker); });
+            newSticker.addEventListener('mousedown', () => setActiveLabel(newSticker));
+
+            setActiveLabel(newSticker);
+            dropzone.appendChild(newSticker);
+            updateStats(1);
+        });
+
+        // Replaced old makeDraggable with Interact.js setup above.
+
+        function removeSticker(el) { el.remove(); updateStats(-1); }
+        function clearStickers() { dropzone.innerHTML = ''; updateStats(-count); }
+        function updateStats(msg) {
+            count += msg;
+            if (count < 0) count = 0;
+            document.getElementById('stickerCount').innerText = `${count} Sticker${count !== 1 ? 's' : ''} Added`;
+            document.getElementById('totalPrice').innerText = '₹' + (count * pricePerSticker).toFixed(2);
+        }
+
+        function shuffleStickers() {
+            // Randomly place a few stickers for fun
+            clearStickers();
+            const stickers = [
+                '<i class="fa-solid fa-mountain text-4xl text-slate-700 pointer-events-none"></i>',
+                '<i class="fa-solid fa-rocket text-4xl text-purple-600 pointer-events-none"></i>',
+                '<i class="fa-solid fa-peace text-4xl text-pink-500 pointer-events-none"></i>'
+            ];
+
+            for (let i = 0; i < 3; i++) {
+                const s = stickers[Math.floor(Math.random() * stickers.length)];
+                const newSticker = document.createElement('div');
+                newSticker.innerHTML = s;
+                newSticker.className = "draggable-item absolute p-2 text-5xl z-50 touch-none select-none";
+
+                const x = Math.random() * 200 + 30;
+                const y = Math.random() * 400 + 50;
+
+                newSticker.style.transform = `translate(${x}px, ${y}px)`;
+                newSticker.setAttribute('data-x', x);
+                newSticker.setAttribute('data-y', y);
+
+                newSticker.addEventListener('contextmenu', (e) => { e.preventDefault(); removeSticker(newSticker); });
+
+                dropzone.appendChild(newSticker);
+                updateStats(1);
+            }
+        }
+
+        function handleStickerUpload(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = "w-full h-full object-contain pointer-events-none";
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = "draggable-item absolute w-24 h-24 p-2 z-50 touch-none select-none";
+                    wrapper.appendChild(img);
+
+                    // Center
+                    const rect = dropzone.getBoundingClientRect();
+                    const x = rect.width / 2 - 50;
+                    const y = rect.height / 2 - 50;
+
+                    wrapper.style.transform = `translate(${x}px, ${y}px)`;
+                    wrapper.setAttribute('data-x', x);
+                    wrapper.setAttribute('data-y', y);
+
+                    wrapper.addEventListener('contextmenu', (evt) => { evt.preventDefault(); removeSticker(wrapper); });
+                    dropzone.appendChild(wrapper);
+                    updateStats(1);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+
+</html>
+```
