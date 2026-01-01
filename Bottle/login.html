@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CraftYourBottle Commerce</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+        }
+
+        .form-container {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hidden-form {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    <nav class="bg-white border-b border-gray-200 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <button onclick="toggleSidebar()"
+                    class="p-2 -ml-2 mr-2 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
+                    <i class="fa-solid fa-bars-staggered text-xl"></i>
+                </button>
+                <a href="bottlecraft.html" class="flex items-center gap-2">
+                    <i class="fa-solid fa-wine-bottle text-slate-700 text-xl"></i>
+                    <span class="font-bold text-xl tracking-tight text-slate-800">CraftYourBottle</span>
+                </a>
+            </div>
+            <a href="bottlecraft.html" class="text-sm font-medium text-slate-500 hover:text-slate-800">
+                Back to Store
+            </a>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-6">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+
+            <div class="flex border-b border-slate-100">
+                <button id="loginTab" onclick="toggleAuth('login')"
+                    class="flex-1 py-4 text-sm font-semibold transition-colors border-b-2 border-[#1e3a8a] text-[#1e3a8a]">
+                    Login
+                </button>
+                <button id="signupTab" onclick="toggleAuth('signup')"
+                    class="flex-1 py-4 text-sm font-semibold transition-colors border-b-2 border-transparent text-slate-400 hover:text-slate-600">
+                    Sign Up
+                </button>
+            </div>
+
+            <div class="p-8">
+                <div id="loginForm" class="form-container">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900">Welcome Back</h2>
+                        <p class="text-slate-500 text-sm mt-1">Please enter your details to sign in.</p>
+                    </div>
+
+                    <form action="#" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Email
+                                Address</label>
+                            <input type="email" placeholder="name@company.com"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-[#1e3a8a] transition-all text-sm">
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <label
+                                    class="block text-xs font-bold text-slate-700 uppercase tracking-wide">Password</label>
+                                <a href="#" class="text-xs font-medium text-[#1e3a8a] hover:underline">Forgot?</a>
+                            </div>
+                            <input type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-[#1e3a8a] transition-all text-sm">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" id="remember"
+                                class="w-4 h-4 rounded border-slate-300 text-[#1e3a8a] focus:ring-[#1e3a8a]">
+                            <label for="remember" class="text-xs text-slate-600">Remember for 30 days</label>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold hover:bg-blue-900 transition-all shadow-lg shadow-blue-900/20">
+                            Sign In
+                        </button>
+                    </form>
+                </div>
+
+                <div id="signupForm" class="form-container hidden-form">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900">Create Account</h2>
+                        <p class="text-slate-500 text-sm mt-1">Join the CraftYourBottle community today.</p>
+                    </div>
+
+                    <form action="#" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">First
+                                    Name</label>
+                                <input type="text" placeholder="John"
+                                    class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-[#1e3a8a] transition-all text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Last
+                                    Name</label>
+                                <input type="text" placeholder="Doe"
+                                    class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-[#1e3a8a] transition-all text-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Email
+                                Address</label>
+                            <input type="email" placeholder="name@company.com"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-[#1e3a8a] transition-all text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Create
+                                Password</label>
+                            <input type="password" placeholder="Min. 8 characters"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-[#1e3a8a] transition-all text-sm">
+                        </div>
+                        <p class="text-[10px] text-slate-400 leading-relaxed">
+                            By signing up, you agree to our <a href="#" class="underline">Terms of Service</a> and <a
+                                href="#" class="underline">Privacy Policy</a>.
+                        </p>
+                        <button type="submit"
+                            class="w-full bg-[#1e3a8a] text-white py-3 rounded-lg font-bold hover:bg-blue-900 transition-all shadow-lg shadow-blue-900/20">
+                            Create Account
+                        </button>
+                    </form>
+                </div>
+
+                <div class="mt-8">
+                    <div class="relative flex items-center justify-center mb-6">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-slate-100"></div>
+                        </div>
+                        <span
+                            class="relative px-3 bg-white text-[10px] font-bold text-slate-400 uppercase tracking-widest">Or
+                            continue with</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button
+                            class="flex items-center justify-center gap-2 py-2.5 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors text-xs font-semibold text-slate-600">
+                            <img src="https://www.svgrepo.com/show/355037/google.svg" class="w-4 h-4"> Google
+                        </button>
+                        <button
+                            class="flex items-center justify-center gap-2 py-2.5 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors text-xs font-semibold text-slate-600">
+                            <i class="fa-brands fa-apple text-sm"></i> Apple
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-6 text-center">
+        <p class="text-slate-400 text-xs">&copy; 2024 CraftYourBottle Commerce. Secure Portal.</p>
+    </footer>
+
+    <script>
+        function toggleAuth(type) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const loginTab = document.getElementById('loginTab');
+            const signupTab = document.getElementById('signupTab');
+
+            if (type === 'login') {
+                loginForm.classList.remove('hidden-form');
+                signupForm.classList.add('hidden-form');
+
+                loginTab.classList.add('border-[#1e3a8a]', 'text-[#1e3a8a]');
+                loginTab.classList.remove('border-transparent', 'text-slate-400');
+
+                signupTab.classList.remove('border-[#1e3a8a]', 'text-[#1e3a8a]');
+                signupTab.classList.add('border-transparent', 'text-slate-400');
+            } else {
+                loginForm.classList.add('hidden-form');
+                signupForm.classList.remove('hidden-form');
+
+                signupTab.classList.add('border-[#1e3a8a]', 'text-[#1e3a8a]');
+                signupTab.classList.remove('border-transparent', 'text-slate-400');
+
+                loginTab.classList.remove('border-[#1e3a8a]', 'text-[#1e3a8a]');
+                loginTab.classList.add('border-transparent', 'text-slate-400');
+            }
+        }
+    </script>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>

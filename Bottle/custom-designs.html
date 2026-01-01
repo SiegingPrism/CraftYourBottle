@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Studio - CraftYourBottle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pattern-overlay {
+            mix-blend-mode: multiply;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .studio-panel {
+            height: calc(100vh - 80px);
+        }
+    </style>
+</head>
+
+<body class="bg-[#f8fafc] text-slate-800">
+
+    <nav class="fixed top-0 left-0 w-full p-6 flex justify-between items-center z-50 pointer-events-none">
+        <div class="flex items-center gap-2 pointer-events-auto">
+            <button onclick="toggleSidebar()"
+                class="p-2 -ml-2 mr-2 bg-white/90 shadow-md text-slate-600 hover:bg-white rounded-lg transition-colors">
+                <i class="fa-solid fa-bars-staggered text-xl"></i>
+            </button>
+            <a href="bottlecraft.html"
+                class="flex items-center gap-2 text-slate-800 bg-white/90 px-3 py-1 rounded-full shadow-md">
+                <i class="fa-solid fa-wine-bottle text-xl"></i>
+                <span class="font-bold text-xl tracking-tight">CraftYourBottle Studio</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="flex flex-col lg:flex-row min-h-screen pt-0 font-sans">
+
+        <!-- Canvas Area -->
+        <div class="lg:w-2/3 bg-slate-200 relative flex items-center justify-center p-12 overflow-hidden">
+            <div class="text-center">
+                <div class="relative w-[300px] h-[600px] mx-auto filter drop-shadow-2xl transition-all duration-500"
+                    id="productCanvas">
+                    <!-- Base Bottle Image (Masked via CSS or transparent PNG concepts in real app) -->
+                    <!-- Simulating a dyanmic overlay approach -->
+                    <div id="bottleColorLayer"
+                        class="absolute inset-0 bg-blue-500 rounded-[50px] mask-image-bottle transition-colors duration-500"
+                        style="clip-path: inset(10% 25% 10% 25% round 20px);"></div>
+                    <!-- Since we don't have a perfect transparent cutout, we use the standard image and overlay blending for demo -->
+                    <img src="plastic_bottle.png"
+                        class="w-full h-full object-cover rounded-2xl relative z-10 opacity-90 transition-all"
+                        id="baseBottle">
+
+                    <div id="patternLayer"
+                        class="absolute inset-0 z-20 opacity-0 transition-opacity duration-500 mix-blend-overlay pointer-events-none">
+                    </div>
+                    <div id="logoLayer"
+                        class="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 z-30 transition-all duration-300 opacity-0 flex items-center justify-center border-2 border-dashed border-white/50 rounded-lg">
+                        <img id="uploadedLogo" class="max-w-full max-h-full object-contain">
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur px-6 py-2 rounded-full shadow-lg text-xs font-bold text-slate-500 flex items-center gap-2">
+                <i class="fa-solid fa-rotate"></i> Rotate 360Â° (Coming Soon)
+            </div>
+        </div>
+
+        <!-- tools Panel -->
+        <div class="lg:w-1/3 bg-white border-l border-slate-200 flex flex-col h-screen pt-20">
+            <div class="p-6 overflow-y-auto flex-1">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-slate-900">Custom Studio</h2>
+                    <p class="text-sm text-slate-400 mt-1">Design your unique masterpiece.</p>
+                </div>
+
+                <!-- Model Selector - Single Model -->
+                <div class="mb-8">
+                    <label class="block text-xs font-bold text-slate-800 uppercase mb-3">1. Select Model</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button onclick="changeModel('plastic_bottle.png')"
+                            class="border-2 border-blue-500 rounded-xl overflow-hidden hover:border-blue-500 focus:border-blue-500 transition-all h-20 ring-2 ring-blue-200">
+                            <img src="plastic_bottle.png" class="w-full h-full object-cover pointer-events-none">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Color Picker -->
+                <div class="mb-8">
+                    <label class="block text-xs font-bold text-slate-800 uppercase mb-3">2. Base Color</label>
+                    <div class="grid grid-cols-5 gap-3">
+                        <button onclick="changeTint('#ef4444')"
+                            class="w-10 h-10 rounded-full bg-red-500 shadow-sm hover:scale-110 transition-transform focus:ring-2 ring-offset-2 ring-red-500"></button>
+                        <button onclick="changeTint('#3b82f6')"
+                            class="w-10 h-10 rounded-full bg-blue-500 shadow-sm hover:scale-110 transition-transform focus:ring-2 ring-offset-2 ring-blue-500"></button>
+                        <button onclick="changeTint('#10b981')"
+                            class="w-10 h-10 rounded-full bg-green-500 shadow-sm hover:scale-110 transition-transform focus:ring-2 ring-offset-2 ring-green-500"></button>
+                        <button onclick="changeTint('#a855f7')"
+                            class="w-10 h-10 rounded-full bg-purple-500 shadow-sm hover:scale-110 transition-transform focus:ring-2 ring-offset-2 ring-purple-500"></button>
+                        <button onclick="changeTint('#f59e0b')"
+                            class="w-10 h-10 rounded-full bg-amber-500 shadow-sm hover:scale-110 transition-transform focus:ring-2 ring-offset-2 ring-amber-500"></button>
+                        <button onclick="changeTint('#1e293b')"
+                            class="w-10 h-10 rounded-full bg-slate-800 shadow-sm hover:scale-110 transition-transform focus:ring-2 ring-offset-2 ring-slate-800"></button>
+                        <button onclick="changeTint('#ffffff')"
+                            class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm hover:scale-110 transition-transform focus:ring-2 ring-offset-2 ring-slate-400"></button>
+                        <button onclick="changeTint('#ec4899')"
+                            class="w-10 h-10 rounded-full bg-pink-500 shadow-sm hover:scale-110 transition-transform focus:ring-2 ring-offset-2 ring-pink-500"></button>
+                    </div>
+                </div>
+
+                <!-- Pattern -->
+                <div class="mb-8">
+                    <label class="block text-xs font-bold text-slate-800 uppercase mb-3">3. Texture / Pattern</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div onclick="setPattern('none')"
+                            class="p-3 border border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 flex items-center gap-3 transition-colors bg-slate-50">
+                            <i class="fa-solid fa-ban text-slate-400"></i> <span class="text-sm font-medium">None</span>
+                        </div>
+                        <div onclick="setPattern('marble')"
+                            class="p-3 border border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 flex items-center gap-3 transition-colors">
+                            <div
+                                class="w-6 h-6 rounded bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')] bg-slate-200">
+                            </div> <span class="text-sm font-medium">Scales</span>
+                        </div>
+                        <div onclick="setPattern('camo')"
+                            class="p-3 border border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 flex items-center gap-3 transition-colors">
+                            <div class="w-6 h-6 rounded bg-green-800"></div> <span class="text-sm font-medium">Camo
+                                (Sim)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload -->
+                <div class="mb-8">
+                    <label class="block text-xs font-bold text-slate-800 uppercase mb-3">4. Upload Logo</label>
+                    <div class="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:bg-slate-50 transition-colors cursor-pointer"
+                        onclick="document.getElementById('fileUpload').click()">
+                        <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-300 mb-2"></i>
+                        <p class="text-sm text-slate-500 font-medium">Click to upload png/jpg</p>
+                    </div>
+                    <input type="file" id="fileUpload" class="hidden" onchange="handleUpload(this)">
+                </div>
+
+            </div>
+
+            <div class="p-6 border-t border-slate-200 bg-slate-50">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-sm text-slate-500">Estimated Total</span>
+                    <span class="text-2xl font-bold text-slate-900">$65.00</span>
+                </div>
+                <button
+                    class="w-full bg-[#1e3a8a] text-white py-4 rounded-xl font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-900 transition-colors">
+                    Save Design & Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="nav.js"></script>
+    <script>
+        function changeModel(url) {
+            const img = document.getElementById('baseBottle');
+            img.style.opacity = 0;
+            setTimeout(() => {
+                img.src = url;
+                img.style.opacity = 0.9;
+            }, 300);
+        }
+
+        function changeTint(color) {
+            // In a real 3D setting, we'd change a material. Here we cheat with Sepia/Hue or CSS filters on the image
+            // For this layout, let's treat the container background as the ambiance
+            const canvas = document.querySelector('.lg\\:w-2\\/3');
+            canvas.style.backgroundColor = color + '20'; // 20 hex opacity
+            // Also tint the "bottle" by using a drop-shadow or border update for simulation
+            // Simulating tint on a static image is hard without SVG masking.
+            // We will just update a border indicator or background halo for feedback.
+            document.getElementById('baseBottle').style.boxShadow = `0 20px 50px -10px ${color}80`;
+        }
+
+        function setPattern(type) {
+            const layer = document.getElementById('patternLayer');
+            if (type === 'none') {
+                layer.style.opacity = 0;
+            } else {
+                layer.style.opacity = 0.5;
+                layer.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/cubes.png')"; // Placeholder pattern
+            }
+        }
+
+        function handleUpload(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('uploadedLogo').src = e.target.result;
+                    document.getElementById('logoLayer').style.opacity = 1;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+
+</html>
